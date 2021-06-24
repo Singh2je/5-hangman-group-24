@@ -32,11 +32,17 @@ class Hangman {
    */
   start(difficulty, next) {
     // get word and set it to the class's this.word
+    this.word = this.getRandomWord(difficulty);
     // clear canvas
+    this.clearCanvas();
     // draw base
+    this.drawBase();
     // reset this.guesses to empty array
+    this.guesses = [];
     // reset this.isOver to false
+    this.isOver = false;
     // reset this.didWin to false
+    this.didWin = false;
   }
 
   /**
@@ -45,14 +51,33 @@ class Hangman {
    */
   guess(letter) {
     // Check if nothing was provided and throw an error if so
+    if(!letter) {
+      throw new Error(`No letter was provided`);
+    }
     // Check for invalid cases (numbers, symbols, ...) throw an error if it is
+    if(!typeof letter == `string`) {
+      throw new Error(`Invalid input`);
+    }
     // Check if more than one letter was provided. throw an error if it is.
+    if(letter.length > 1) {
+      throw new Error(`More than one letter provided`);
+    }
     // if it's a letter, convert it to lower case for consistency.
+    letter.toLowerCase();
     // check if this.guesses includes the letter. Throw an error if it has been guessed already.
+    if(this.guesses.includes(letter)) {
+      throw new Error(`Letter already guessed`);
+    }
     // add the new letter to the guesses array.
+    this.guesses.push(letter);
     // check if the word includes the guessed letter:
     //    if it's is call checkWin()
     //    if it's not call onWrongGuess()
+    if(this.word.includes(letter)) {
+      this.checkWin()
+    } else {
+      this.onWrongGuess()
+    }
   }
 
   checkWin() {
