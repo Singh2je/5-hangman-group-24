@@ -3,7 +3,7 @@ class Hangman {
     if (!_canvas) {
       throw new Error(`invalid canvas provided`);
     }
-
+    this.wrongGuessesCount = 0;
     this.canvas = _canvas;
     this.ctx = this.canvas.getContext(`2d`);
   }
@@ -82,7 +82,17 @@ class Hangman {
 
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
+    var remainingLetters = this.word.length;
+    this.guesses.map(guess => {
+      if(this.word.includes(guess)) {
+        remainingLetters--;
+      }
+    })
     // if zero, set both didWin, and isOver to true
+    if(remainingLetters == 0) {
+      this.didWin = true;
+      this.isOver = true;
+    }
   }
 
   /**
@@ -90,7 +100,31 @@ class Hangman {
    * drawHead, drawBody, drawRightArm, drawLeftArm, drawRightLeg, or drawLeftLeg.
    * if the number wrong guesses is 6, then also set isOver to true and didWin to false.
    */
-  onWrongGuess() {}
+  onWrongGuess() {
+    this.wrongGuessesCount++;
+    switch(this.wrongGuessesCount) {
+      case 1:
+        this.drawHead();
+        break;
+      case 2:
+        this.drawBody();
+        break;
+      case 3:
+        this.drawRightArm();
+        break;
+      case 4:
+        this.drawLeftArm();
+        break;
+      case 5:
+        this.drawRightLeg();
+        break;
+      case 6:
+        this.drawLeftLeg();
+        this.isOver = true;
+        this.didWin = false;
+        break;
+    }
+  }
 
   /**
    * This function will return a string of the word placeholder
@@ -98,7 +132,24 @@ class Hangman {
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
   getWordHolderText() {
-    return;
+    var text = "";
+    var wordArray = [];
+    var textArray = [];
+    for(var i = 0; i < this.word.length; i++) {
+      wordArray[i] = this.word.charAt(i);
+      textArray[i] = "_ ";
+    }
+    for(var i = 0; i < wordArray.length; i++) {
+      this.guesses.map(guess => {
+        if(wordArray[i] == guess) {
+          textArray[i] = `${guess} `;
+        }
+      });
+    }
+    textArray.map(item => {
+      text.concat(item);
+    });
+    return text;
   }
 
   /**
