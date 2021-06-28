@@ -43,6 +43,8 @@ class Hangman {
     this.isOver = false;
     // reset this.didWin to false
     this.didWin = false;
+
+    next();
   }
 
   /**
