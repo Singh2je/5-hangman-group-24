@@ -18,11 +18,43 @@ class Hangman {
    *    { word: "book" }
    * */
   getRandomWord(difficulty) {
-    return fetch(
-      `https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=${difficulty}`
-    )
-      .then((r) => r.json())
-      .then((r) => r.word);
+    let word;
+    // const getResponse = fetch(`https://hangman-micro-service.herokuapp.com/?difficulty=${difficulty}`)
+    // .then((r) => r.json())
+    // .then((r) => {
+    //   return r.word
+    // });
+
+    // async function getResponse() {
+    //   return await fetch(`https://hangman-micro-service.herokuapp.com/?difficulty=${difficulty}`)
+    //   .then((r) => r.json())
+    //   .then((r) => r.word);
+    // }
+
+    // const executeUrl = async () => {
+    //   await getResponse().then((r) => {
+    //     word = r;
+    //     console.log(r);
+    //   });
+    // }
+
+    function sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < milliseconds);
+    }
+
+    (async () => {
+      const json = await fetch(`https://hangman-micro-service.herokuapp.com/?difficulty=${difficulty}`).then((r) => r.json());
+      sleep(2000);
+      word = json.word;
+      console.log(`word - `,json.word, ` actual word - `,word);
+    })();
+    sleep(2000);
+    console.log(`test `,word);
+    return word;
   }
 
   /**
@@ -32,7 +64,7 @@ class Hangman {
    */
   start(difficulty, next) {
     // get word and set it to the class's this.word
-    this.word = this.getRandomWord(difficulty);
+    this.word = this.getRandomWord(difficulty)
     // clear canvas
     this.clearCanvas();
     // draw base
@@ -46,6 +78,12 @@ class Hangman {
 
     next();
   }
+
+  // _word() {
+  //   this.getRandomWord(difficulty).then((word) => {
+  //     this.word = word;
+  //   });
+  // }
 
   /**
    *
