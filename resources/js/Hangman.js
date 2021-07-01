@@ -68,12 +68,13 @@ class Hangman {
    * @param {string} letter the guessed letter.
    */
   guess(letter) {
+    var regex = /^[A-Za-z]+$/;
     // Check if nothing was provided and throw an error if so
     if(!letter) {
       return `No letter was provided`;
     }
     // Check for invalid cases (numbers, symbols, ...) throw an error if it is
-    if(!typeof letter == 'string') {
+    if(!letter.match(regex)) {
       return `Invalid input`;
     }
     // Check if more than one letter was provided. throw an error if it is.
