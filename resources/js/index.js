@@ -59,16 +59,16 @@ try {
     game.guess(guess);
     wordHolderText.innerHTML = game.getWordHolderText();
     guessesText.innerHTML = game.getGuessesText();
-    guessInput.innerHTML = ``;
+    guessInput.value = ``;
     if(game.isOver) {
       guessInput.disabled = true;
       guessForm.disabled = true;
-      resetGame.disabled = false;
-    }
-    if(game.didWin) {
-      alert(`You Won`);
-    } else {
-      alert(`You lost`);
+      resetGame.classList.remove(`hidden`);
+      if(game.didWin) {
+        alert(`You Won`);
+      } else {
+        alert(`You lost`);
+      }
     }
   });
 

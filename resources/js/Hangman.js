@@ -30,12 +30,12 @@ class Hangman {
    * @param {string} difficulty a difficulty string to be passed to the getRandomWord Function
    * @param {function} next callback function to be called after a word is reveived from the API.
    */
-  start(difficulty, next) {
+  async start(difficulty, next) {
     // get word and set it to the class's this.word
-    this.word = this.getRandomWord(difficulty).then((r) => {
+    this.word = await this.getRandomWord(difficulty).then((r) => {
       return r;
     });
-    console.log(`outside`, this.word);
+    console.log(`word`, this.word);
     // clear canvas
     this.clearCanvas();
     // draw base
@@ -94,11 +94,17 @@ class Hangman {
   checkWin() {
     // using the word and the guesses array, figure out how many remaining unknowns.
     var remainingLetters = this.word.length;
-    this.guesses.map(guess => {
-      if(this.word.includes(guess)) {
-        remainingLetters--;
-      }
-    })
+    var wordArray = [];
+    for(var i = 0; i < this.word.length; i++) {
+      wordArray[i] = this.word.charAt(i);
+    }
+    for(var i = 0; i < wordArray.length; i++) {
+      this.guesses.map(guess => {
+        if(wordArray[i] == guess) {
+          remainingLetters--;
+        }
+      });
+    }
     // if zero, set both didWin, and isOver to true
     if(remainingLetters == 0) {
       this.didWin = true;
@@ -157,10 +163,7 @@ class Hangman {
         }
       });
     }
-    textArray.map(item => {
-      text.concat(item);
-    });
-    return text;
+    return `Word: ` + textArray.join(` `);
   }
 
   /**
