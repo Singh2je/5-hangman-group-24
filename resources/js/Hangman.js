@@ -47,6 +47,13 @@ class Hangman {
     // reset this.didWin to false
     this.didWin = false;
 
+    this.drawHead();
+    this.drawBody();
+    this.drawLeftArm();
+    this.drawRightArm();
+    this.drawLeftLeg();
+    this.drawRightLeg();
+
     next();
   }
 
@@ -63,21 +70,21 @@ class Hangman {
   guess(letter) {
     // Check if nothing was provided and throw an error if so
     if(!letter) {
-      throw new Error(`No letter was provided`);
+      return `No letter was provided`;
     }
     // Check for invalid cases (numbers, symbols, ...) throw an error if it is
-    if(!typeof letter == `string`) {
-      throw new Error(`Invalid input`);
+    if(!typeof letter == 'string') {
+      return `Invalid input`;
     }
     // Check if more than one letter was provided. throw an error if it is.
     if(letter.length > 1) {
-      throw new Error(`More than one letter provided`);
+      return `More than one letter provided`;
     }
     // if it's a letter, convert it to lower case for consistency.
     letter.toLowerCase();
     // check if this.guesses includes the letter. Throw an error if it has been guessed already.
     if(this.guesses.includes(letter)) {
-      throw new Error(`Letter already guessed`);
+      return `Letter already guessed`;
     }
     // add the new letter to the guesses array.
     this.guesses.push(letter);
@@ -193,15 +200,25 @@ class Hangman {
     this.ctx.fillRect(10, 410, 175, 10); // Base
   }
 
-  drawHead() {}
+  drawHead() {
+    this.ctx.beginPath();
+    this.ctx.lineWidth = 5;
+    this.ctx.arc(250, 97.5, 35, 0, 2 * Math.PI);
+    this.ctx.stroke();
+  }
 
-  drawBody() {}
+  drawBody() {
+    this.ctx.fillRect(248, 130, 5, 200);
+  }
 
   drawLeftArm() {}
 
   drawRightArm() {}
 
-  drawLeftLeg() {}
+  drawLeftLeg() {
+    this.ctx.rotate(60 * Math.PI / 180);
+    this.ctx.fillRect(407, -55, 5, 80);
+  }
 
   drawRightLeg() {}
 }
