@@ -62,12 +62,13 @@ class Hangman {
    * @param {string} letter the guessed letter.
    */
   guess(letter) {
+    var regex = /^[A-Za-z]+$/;
     // Check if nothing was provided and throw an error if so
     if(!letter) {
       return `No letter was provided`;
     }
     // Check for invalid cases (numbers, symbols, ...) throw an error if it is
-    if(!typeof letter == 'string') {
+    if(!letter.match(regex)) {
       return `Invalid input`;
     }
     // Check if more than one letter was provided. throw an error if it is.
@@ -75,7 +76,7 @@ class Hangman {
       return `More than one letter provided`;
     }
     // if it's a letter, convert it to lower case for consistency.
-    letter.toLowerCase();
+    letter = letter.toLowerCase();
     // check if this.guesses includes the letter. Throw an error if it has been guessed already.
     if(this.guesses.includes(letter)) {
       return `Letter already guessed`;
@@ -150,7 +151,6 @@ class Hangman {
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
   getWordHolderText() {
-    var text = "";
     var wordArray = [];
     var textArray = [];
     for(var i = 0; i < this.word.length; i++) {
