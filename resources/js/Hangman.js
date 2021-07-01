@@ -156,7 +156,6 @@ class Hangman {
    * i.e.: if the word is BOOK, and the letter O has been guessed, this would return _ O O _
    */
   getWordHolderText() {
-    var text = "";
     var wordArray = [];
     var textArray = [];
     for(var i = 0; i < this.word.length; i++) {
