@@ -82,7 +82,7 @@ class Hangman {
       return `More than one letter provided`;
     }
     // if it's a letter, convert it to lower case for consistency.
-    letter.toLowerCase();
+    letter = letter.toLowerCase();
     // check if this.guesses includes the letter. Throw an error if it has been guessed already.
     if(this.guesses.includes(letter)) {
       return `Letter already guessed`;
