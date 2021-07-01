@@ -47,12 +47,6 @@ class Hangman {
     // reset this.didWin to false
     this.didWin = false;
 
-    this.drawHead();
-    this.drawBody();
-    this.drawLeftArm();
-    this.drawRightArm();
-    this.drawLeftLeg();
-    this.drawRightLeg();
 
     next();
   }
@@ -208,17 +202,34 @@ class Hangman {
   }
 
   drawBody() {
-    this.ctx.fillRect(248, 130, 5, 200);
+    this.ctx.fillRect(248, 130, 5, 150);
   }
 
-  drawLeftArm() {}
-
-  drawRightArm() {}
-
-  drawLeftLeg() {
-    this.ctx.rotate(60 * Math.PI / 180);
-    this.ctx.fillRect(407, -55, 5, 80);
-  }
-
-  drawRightLeg() {}
+  drawLeftArm() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 150);
+    this.ctx.lineTo(180, 220);
+    this.ctx.stroke();
+    }
+    
+    drawRightArm() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 150);
+    this.ctx.lineTo(320, 220);
+    this.ctx.stroke();
+    }
+    
+    drawLeftLeg() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 280);
+    this.ctx.lineTo(180, 350);
+    this.ctx.stroke();
+    }
+    
+    drawRightLeg() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(250, 280);
+    this.ctx.lineTo(320, 350);
+    this.ctx.stroke();
+    }
 }
